@@ -153,7 +153,7 @@ const evaluateThemeSelection = (selectedTheme) => {
 
 // This function will present the LEGO Star Wars items available for order
 const starWarsItems = () => {
-  setTimeout(() => {showMessage(`May the force be with you, you picked the only valid choice! Choose one of our top picks:`, 'bot');
+  setTimeout(() => {showMessage(`May the force be with you, you made the only valid choice 🥳 ! Choose one of our top picks:`, 'bot');
 	inputWrapper.innerHTML = `
   <button id="btn1">Millenium Falcon</button>
   <button id="btn2">R2D2</button>
@@ -182,12 +182,23 @@ const confirmOrder = (item) => {
 	document.getElementById('yeschangeBtn').addEventListener('click', () => {
     showMessage('Yes', 'user');
     setTimeout(() => {showMessage(`Awesome! One ${item} will be sent to you from a galaxy far far away.`, 'bot');
+    playSound ();
     clearInput();}, 1000);
   })
   document.getElementById('nochangeBtn').addEventListener('click', () => {
     showMessage('No.', 'user');
     goodByeMessage();}, 1000);
 };
+
+// This function will play the Star Wars theme 
+const playSound = () => {
+  inputWrapper.innerHTML = `
+  <audio autoplay>
+    <source src="./assets/star-wars-theme.mp3" type="audio/mpeg">
+  </audio>
+  `;
+  document.getElementById("audio").play();
+}
 
 // This function will end the chat with the message "Ok, Good bye". 
 const goodByeMessage = () => {

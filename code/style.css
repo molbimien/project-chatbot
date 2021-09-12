@@ -47,6 +47,10 @@ input, select {
   font-weight: 600;
   line-height: 26px;
   flex: 1;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 main {
