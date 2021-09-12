@@ -11,8 +11,6 @@ const inputWrapper = document.getElementById('input-wrapper');
 //   showMessage(msg, 'user')
 // }
 
-// Global variables, if you need any, declared here
-
 // Functions declared here
 
 // This function will add a chat bubble in the correct place based on who the sender is
@@ -38,10 +36,9 @@ const showMessage = (message, sender) => {
       </section>
     `;
 	}
-
 	// This little thing makes the chat scroll to the last message when there are too many to be shown in the chat box
-	chat.scrollTop = chat.scrollHeight
-}
+	chat.scrollTop = chat.scrollHeight;
+};
 
 // This function clears the content in the innerHTML - used here to clear the input buttons when the chat ends
 const clearInput = () => {
@@ -68,7 +65,7 @@ const greeting = () => {
 
 // This function will get the chat started
 const startChatting = () => {
-  setTimeout(() => {showMessage(`That's awesome! Please select the LEGO® theme you're interested in below.`, 'bot');
+  setTimeout(() => {showMessage(`Awesome! Please select the LEGO® theme you're interested in below.`, 'bot');
   selectTheme();}, 1000);
 }
 
@@ -126,10 +123,9 @@ const selectTheme = () => {
     <option value="Xtra">Xtra</option>
   </select>
 `;
-  const select = document.getElementById('select');
+	const select = document.getElementById('select');
 	select.addEventListener('change', () => evaluateThemeSelection(select.value));
 };
-
 
 // This function will handle the LEGO theme choice made by the user 
 const evaluateThemeSelection = (selectedTheme) => {
@@ -138,7 +134,7 @@ const evaluateThemeSelection = (selectedTheme) => {
 		starWarsItems();
 	} else {
     showMessage(selectedTheme, 'user');
-    setTimeout(() => {showMessage(`Shoot! ${selectedTheme} is out of stock. How about Star Wars lego?`, 'bot');
+    setTimeout(() => {showMessage(`Shoot! ${selectedTheme} is out of stock. How about Star Wars™ lego?`, 'bot');
     inputWrapper.innerHTML = `
     <button id="yesBtn">Ok! Show me what you got in stock!</button>
     <button id="notInterestedBtn">No, not interested.</button>
@@ -150,6 +146,7 @@ const evaluateThemeSelection = (selectedTheme) => {
     document.getElementById('notInterestedBtn').addEventListener('click', () => handleNotInterested());}, 1000);
 	}
 };
+
 
 // This function will present the LEGO Star Wars items available for order
 const starWarsItems = () => {
@@ -171,26 +168,31 @@ const handleNotInterested = () => {
   goodByeMessage();
 }
 
-// This function will close the deal and end the chat with Thank You message and order confirmation. 
+// This function will ask the user to confirm the purchase 
 const confirmOrder = (item) => {
 	showMessage(item, 'user');
-	setTimeout(() => {showMessage(`Excellent choice! One ${item} have now been added to your cart. Are you happy with your order?`, 'bot');}, 1000);
+	setTimeout(() => {showMessage(`Excellent choice! One ${item} have now been added to your cart. Are you happy with your order?`, 'bot');
 	inputWrapper.innerHTML = `
-  <button id="yeschangeBtn">Yes!</button>
-  <button id="nochangeBtn">No!</button>
+  <button id="confirmBtn">Yes!</button>
+  <button id="notConfirmedBtn">No!</button>
   `;
-	document.getElementById('yeschangeBtn').addEventListener('click', () => {
-    showMessage('Yes', 'user');
-    setTimeout(() => {showMessage(`Awesome! One ${item} will be sent to you from a galaxy far far away.`, 'bot');
-    playSound ();
-    clearInput();}, 1000);
-  })
-  document.getElementById('nochangeBtn').addEventListener('click', () => {
+  document.getElementById('confirmBtn').addEventListener('click', () => thankYou(item));
+  document.getElementById('notConfirmedBtn').addEventListener('click', () => {
     showMessage('No.', 'user');
-    goodByeMessage();}, 1000);
-};
+    goodByeMessage();
+});}, 1000);
+}
 
-// This function will play the Star Wars theme 
+// This function will close the deal and end the chat with Thank You message and order confirmation. 
+const thankYou = (item) => {
+  showMessage('Yes!', 'user');
+  setTimeout(() => {showMessage(`Awesome! One ${item} will be sent to you from a galaxy far far away.`, 'bot');
+  playSound ();
+  clearInput();
+});
+}
+
+
 const playSound = () => {
   inputWrapper.innerHTML = `
   <audio autoplay>
@@ -208,13 +210,10 @@ const goodByeMessage = () => {
 
 // Set up your eventlisteners here
 
-
 // When website loaded, chatbot asks first question.
 // normally we would invoke a function like this:
-  //  greeting()
+// greeting()
 // But if we want to add a little delay to it, we can wrap it in a setTimeout:
 // setTimeout(functionName, timeToWaitInMilliSeconds)
 // This means the greeting function will be called one second after the website is loaded.
-setTimeout(greeting, 1250);
-
-
+setTimeout(greeting, 1000);
